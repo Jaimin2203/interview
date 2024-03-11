@@ -3,31 +3,107 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Interactive Alphanumeric Manipulation Tool</title>
+    <link rel="stylesheet" href="index.css" />
   </head>
   <body>
-    <div>
-      <input type="text" />
-    </div>
-    <label>A-Z</label>
-    <input type="radio" />
-    <button type="submit">submit</button>
-    <script>
-      //   function isUpper(char) {
-      //     return /^[A-Z]$./;
-      //   }
-      //   if (isUpper(inputText)) {
-      //     console.log(`${inputText} is a corret to the value`);
-      //   } else {
-      //     console.log(`${inputText} is a not corret to the value`);
-      //   }
+    <label for="inputText">Input Text:</label>
+    <input type="text" id="inputText" placeholder="Enter alphanumeric text" />
 
-      const newArry = ["H", "e", "l", "l", "o", 1, 2, 3, "@"];
-      newArry.filter(() => {
-        if (newArry !== Number) {
-          console.log(newArry);
+    <p>
+      <label>Choose Operation:</label>
+    </p>
+
+    <p>
+      <input type="radio" name="operation" value="uppercase" /> Return the A-Z.
+    </p>
+    <p>
+      <input type="radio" name="operation" value="lowercase" /> Return the a-z.
+    </p>
+    <p>
+      <input type="radio" name="operation" value="digits" /> Return the 0-9.
+    </p>
+    <p>
+      <input type="radio" name="operation" value="special" /> Return only
+      special characters.
+    </p>
+    <p>
+      <input type="radio" name="operation" value="vowels" /> Return only vowels
+      (a, e, i, o, u).
+    </p>
+    <p>
+      <input type="radio" name="operation" value="consonants" /> Return only
+      consonants.
+    </p>
+    <p>
+      <input type="radio" name="operation" value="oddPositions" /> Print
+      characters/digits at odd positions.
+    </p>
+    <p>
+      <input type="radio" name="operation" value="evenPositions" /> Print
+      characters/digits at even positions.
+    </p>
+    <p>
+      <input type="radio" name="operation" value="reverse" /> Reverse the input.
+    </p>
+    <p>
+      <input type="radio" name="operation" value="secondLast" /> Find the second
+      last character/digit/number in the input.
+    </p>
+
+    <button onclick="performOperation()">Perform Operation</button>
+
+    <div id="output"></div>
+
+    <script>
+      function performOperation() {
+        const inputText = document.getElementById("inputText").value;
+        const operation = document.querySelector(
+          'input[name="operation"]:checked'
+        ).value;
+        let result;
+
+        switch (operation) {
+          case "uppercase":
+            result = inputText.match(/[A-Z]/g);
+            break;
+          case "lowercase":
+            result = inputText.match(/[a-z]/g);
+            break;
+          case "digits":
+            result = inputText.match(/[0-9]/g);
+            break;
+          case "special":
+            result = inputText.match(/[^A-Za-z0-9]/g);
+            break;
+          case "vowels":
+            result = inputText.match(/[aeiou]/gi);
+            break;
+          case "consonants":
+            result = inputText.match(/[bcdfghjklmnpqrstvwxyz]/gi);
+            break;
+          case "oddPositions":
+            result = inputText
+              .split("")
+              .filter((char, index) => index % 2 === 0);
+            break;
+          case "evenPositions":
+            result = inputText
+              .split("")
+              .filter((char, index) => index % 2 !== 0);
+            break;
+          case "reverse":
+            result = inputText.split("").reverse().join("");
+            break;
+          case "secondLast":
+            result = inputText.charAt(inputText.length - 2);
+            break;
+          default:
+            result = "Invalid operation";
         }
-      });
+
+        document.getElementById("output").innerText = `Output: ${result}`;
+      }
     </script>
   </body>
 </html>
